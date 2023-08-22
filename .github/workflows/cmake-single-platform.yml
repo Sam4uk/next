@@ -91,6 +91,12 @@ jobs:
           apt-get install -y
           git
           cmake
+          clang 
+          build-base 
+          llvm-static 
+          llvm-dev 
+          clang-static 
+          clang-dev
         # flex
         # bison
         # crossbuild-essential-${{matrix.arch}}
