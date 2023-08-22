@@ -68,6 +68,7 @@ jobs:
             next
           # build/src/avrdude
           # build/src/avrdude.conf
+######################################################################################################
 
   linux:
     runs-on: ubuntu-latest
@@ -141,64 +142,62 @@ jobs:
           # build/src/avrdude.conf
 
 #############################################################################
-  macos-x86_64:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Install prerequisites
-        run: >-
-          # brew update
-
-          brew install
-          cmake
-          qtbase5-dev 
-          qtchooser 
-          qt5-qmake 
-          qtbase5-dev-tools
-        # flex
-        # bison
-        # libelf
-        # libusb
-        # hidapi
-        # libftdi
-        # readline
-      - name: Configure
-        run: >-
-          cmake
-          -B build
-          -D CMAKE_C_FLAGS=-I/usr/local/include
-          -D CMAKE_EXE_LINKER_FLAGS=-L/usr/local/Cellar
-          -D DEBUG_CMAKE=1
-          -D CMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
-      - name: Build
-        run: cmake --build build
-      - name: Archive build artifacts
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: build-macos-x86_64
-          path: |
-            build/
-            !**/*.d
-            !**/*.o
-      - name: Archive executables
-        uses: actions/upload-artifact@v3
-        with:
-          name: next-macos-x86_64
-          path: |
-            next
-          # build/src/avrdude
-          # build/src/avrdude.conf
-
+#  macos-x86_64:
+#    runs-on: macos-latest
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: Install prerequisites
+#        run: >-
+#          # brew update
+#
+#          brew install
+#          cmake
+#          qtbase5-dev 
+#          qtchooser 
+#          qt5-qmake 
+#          qtbase5-dev-tools
+#        # flex
+#        # bison
+#        # libelf
+#        # libusb
+#        # hidapi
+#        # libftdi
+#        # readline
+#      - name: Configure
+#        run: >-
+#          cmake
+#          -B build
+#          -D CMAKE_C_FLAGS=-I/usr/local/include
+#          -D CMAKE_EXE_LINKER_FLAGS=-L/usr/local/Cellar
+#          -D DEBUG_CMAKE=1
+#          -D CMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+#      - name: Build
+#        run: cmake --build build
+#      - name: Archive build artifacts
+#        if: always()
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: build-macos-x86_64
+#          path: |
+#            build/
+#            !**/*.d
+#            !**/*.o
+#      - name: Archive executables
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: next-macos-x86_64
+#          path: |
+#            next
+#          # build/src/avrdude
+#          # build/src/avrdude.conf
+#
 ########################################################################################33
   msvc:
     runs-on: windows-latest
     strategy:
       matrix:
         include:
-          - { arch: x86, platform: Win32 }
           - { arch: x64, platform: x64 }
-          - { arch: arm64, platform: ARM64 }
     steps:
       - uses: actions/checkout@v3
       - name: Install prerequisites
@@ -255,7 +254,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - { sys: mingw32, env: i686 }
           - { sys: mingw64, env: x86_64 }
     steps:
       - uses: actions/checkout@v3
