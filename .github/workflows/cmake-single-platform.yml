@@ -92,14 +92,10 @@ jobs:
           git
           cmake
           clang 
-          build-base 
-          llvm-static 
-          llvm-dev 
-          clang-static 
-          clang-dev
+          gcc
+          crossbuild-essential-${{matrix.arch}}
         # flex
         # bison
-        # crossbuild-essential-${{matrix.arch}}
         # libelf-dev:${{matrix.arch}}
         # libusb-dev:${{matrix.arch}}
         # libusb-1.0-0-dev:${{matrix.arch}}
