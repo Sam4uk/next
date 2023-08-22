@@ -1,43 +1,70 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.5)
 
-project(    e2promtools
-            VERSION 0.0.0.1
-            DESCRIPTION "")
+project(next VERSION 0.1 LANGUAGES CXX)
 
-                                                                              
-set(CMAKE_CXX_STANDARD 20)  
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 
-add_compile_options(
-#   -Werror
-#   -pedantic-errors
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-  -Wpedantic
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
-  -Wcast-align
-#   -Wcast-qual
-#   -Wconversion
-#   -Wextra-semi
-#   -Wfloat-equal
-
-#   -Wnon-virtual-dtor
-#   -Wold-style-cast
-#   -Woverloaded-virtual
-#   -Wredundant-decls
-#   -Wsign-promo
-#   -Wall
-#   -Wextra  
+set(PROJECT_SOURCES
+        main.cpp
+        mainwindow.cpp
+        mainwindow.h
+        mainwindow.ui
 )
 
+if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+    qt_add_executable(next
+        MANUAL_FINALIZATION
+        ${PROJECT_SOURCES}
+    )
+# Define target properties for Android with Qt 6 as:
+#    set_property(TARGET next APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
+#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
+# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
+else()
+    if(ANDROID)
+        add_library(next SHARED
+            ${PROJECT_SOURCES}
+        )
+# Define properties for Android with Qt 5 after find_package() calls as:
+#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
+    else()
+        add_executable(next
+            ${PROJECT_SOURCES}
+        )
+    endif()
+endif()
 
-file(WRITE "${PROJECT_BINARY_DIR}/.gitignore" [=[
-# this .gitignore file
-*.*
-*
-]=])
+target_link_libraries(next PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
-add_executable(e2serial
-source/main.cxx
+# Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
+# If you are developing for iOS or macOS you should consider setting an
+# explicit, fixed bundle identifier manually though.
+if(${QT_VERSION} VERSION_LESS 6.1.0)
+  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.next)
+endif()
+set_target_properties(next PROPERTIES
+    ${BUNDLE_ID_OPTION}
+    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+    MACOSX_BUNDLE TRUE
+    WIN32_EXECUTABLE TRUE
 )
-                                                                       
 
+include(GNUInstallDirs)
+install(TARGETS next
+    BUNDLE DESTINATION .
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
 
+if(QT_VERSION_MAJOR EQUAL 6)
+    qt_finalize_executable(next)
+endif()
