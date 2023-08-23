@@ -263,7 +263,6 @@ jobs:
           update: true
           install: >-
             mingw-w64-x86_64-qt-creator
-            mingw-w64-i686-qt-creator
             mingw-w64-x86_64-clang 
             mingw-w64-i686-clang
             mingw-w64-${{matrix.env}}-gcc
