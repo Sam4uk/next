@@ -118,6 +118,7 @@ jobs:
           -D CMAKE_SYSTEM_NAME=Linux
           -D CMAKE_SYSTEM_PROCESSOR=${{matrix.processor}}
           -D CMAKE_C_COMPILER=${{matrix.prefix}}-gcc
+          -D CMAKE_C_COMPILER=${{matrix.prefix}}-ar
           -D CMAKE_FIND_ROOT_PATH=/usr/${{matrix.prefix}}
           -D CMAKE_INCLUDE_PATH=/usr/include/${{matrix.inc-lib}}
           -D CMAKE_LIBRARY_PATH=/usr/lib/${{matrix.inc-lib}}
