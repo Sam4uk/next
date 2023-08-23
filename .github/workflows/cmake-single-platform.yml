@@ -285,9 +285,9 @@ jobs:
           cmake
           -G"MSYS Makefiles"
           -D DEBUG_CMAKE=1
-          -D CMAKE_CXX_COMPILER=mingw-w64-${{matrix.env}}-gcc 
+          -D CMAKE_CXX_COMPILER=mingw-w64-${{matrix.env}}-clang++
           -D CMAKE_AR=mingw-w64-${{matrix.env}}-lib
-          -D CMAKE_C_COMPILER=mingw-w64-${{matrix.env}}-gcc
+          -D CMAKE_C_COMPILER=mingw-w64-${{matrix.env}}-clang
           -D CMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
           -B build
       - name: Build
