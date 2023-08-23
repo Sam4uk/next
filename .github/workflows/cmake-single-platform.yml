@@ -262,11 +262,15 @@ jobs:
           msystem: ${{matrix.sys}}
           update: true
           install: >-
-            base-devel
-            qtbase5-dev 
-            qtchooser 
-            qt5-qmake 
-            qtbase5-dev-tools
+            mingw-w64-x86_64-qt-creator
+            mingw-w64-i686-qt-creator
+            mingw-w64-x86_64-clang 
+            mingw-w64-i686-clang
+          # base-devel
+          # qtbase5-dev 
+          # qtchooser 
+          # qt5-qmake 
+          # qtbase5-dev-tools
             mingw-w64-${{matrix.env}}-gcc
             mingw-w64-${{matrix.env}}-cmake
             mingw-w64-${{matrix.env}}-libelf
