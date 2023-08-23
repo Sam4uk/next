@@ -12,6 +12,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
+
+set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc -static-libstdc++  ${CMAKE_CXX_STANDARD_LIBRARIES}")
+
+# -lwinpthread
+# -Bstatic
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--whole-archive  -Wl,--no-whole-archive")
+
 set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp
