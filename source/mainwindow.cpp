@@ -7,7 +7,7 @@
 #include <QMessageBox>
 #include <QFile>
 #include <QTextStream>
-#include <QtSerialPort/QSerialPortInfo>
+// #include <QtSerialPort/QSerialPortInfo>
 
 
 void MainWindow::_steps(){
