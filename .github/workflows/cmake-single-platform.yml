@@ -27,8 +27,7 @@ jobs:
           qtchooser 
           qt5-qmake 
           qtbase5-dev-tools
-          curl
-          libcurl4
+          libcurl4-gnutls-dev
 
         # build-essential
         # flex
