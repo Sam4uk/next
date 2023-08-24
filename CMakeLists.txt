@@ -19,8 +19,6 @@ find_package(CURL REQUIRED)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
-set(TS_FILES next_en_US.ts)
-
 
 set(PROJECT_SOURCES
         source/main.cpp
