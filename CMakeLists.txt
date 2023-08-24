@@ -16,8 +16,8 @@ file(WRITE "${PROJECT_BINARY_DIR}/.gitignore" [=[
 ]=])
 
 find_package(CURL REQUIRED)
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(TS_FILES GUI_Nanit_en_US.ts)
 
