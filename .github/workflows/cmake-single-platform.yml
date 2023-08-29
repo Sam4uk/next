@@ -279,7 +279,9 @@ jobs:
             mingw-w64-${{matrix.env}}-libusb-compat-git
             mingw-w64-${{matrix.env}}-hidapi
             mingw-w64-${{matrix.env}}-libftdi
-            libwxgt*
+            wx*-headers
+            libwxgtk*
+            libwxgtk*-dev
           # base-devel
           # qtbase5-dev 
           # qtchooser 
