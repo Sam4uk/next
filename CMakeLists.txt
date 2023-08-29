@@ -1,93 +1,41 @@
-cmake_minimum_required(VERSION 3.5)
+#############################################################################
+# Name:        samples/minimal/CMakeListst.txt
+# Purpose:     Sample CMake file to show usage of cmake for wxWidgets users
+# Author:      Tobias Taschner
+# Created:     2016-10-23
+# Copyright:   (c) 2016 wxWidgets development team
+# Licence:     wxWindows licence
+#############################################################################
 
-project(next VERSION 0.1 LANGUAGES CXX)
+#
+# This file is just a sample to show using cmake from an application
+# If you want to build the minimal and other samples please use the
+# wxBUILD_SAMPLES option when using cmake on the library
+#
 
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
+# Declare the minimum required CMake version
+cmake_minimum_required(VERSION 3.14)
 
-set(CMAKE_CXX_STANDARD 17)
+# Name the project
+project(next)
+
+set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-file(WRITE "${PROJECT_BINARY_DIR}/.gitignore" [=[
-# this .gitignore file
-*.*
-*
-]=])
+# Request the required wxWidgets libs
+find_package(wxWidgets)
 
-find_package(CURL REQUIRED)
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+# Include the wxWidgets use file to initialize various settings
+if(wxWidgets_USE_FILE)
+    include(${wxWidgets_USE_FILE})
+endif()
 
-
-set(PROJECT_SOURCES
-        source/main.cpp
-        source/mainwindow.cpp
-        include/mainwindow.h
-        mainwindow.ui
-        ${TS_FILES}
-)
-
-include_directories(
-    "./include"
-    "./UI"
+# Define a variable containing a list of source files for the project
+set(SRC_FILES
+    minimal.cpp
     )
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(next
-        MANUAL_FINALIZATION
-        ${PROJECT_SOURCES}
-        instruction.md
-        include/Configuration.h
-        include/IntelHex.hpp
-    )
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET next APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
-
-    # qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
-else()
-    if(ANDROID)
-        add_library(next SHARED
-            ${PROJECT_SOURCES}
-        )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
-    else()
-        add_executable(next
-            ${PROJECT_SOURCES}
-        )
-    endif()
-
-    # qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
-endif()
-
-target_link_libraries(next PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
-                          ${CURL_LIBRARIES}
-)
-
-# Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
-# If you are developing for iOS or macOS you should consider setting an
-# explicit, fixed bundle identifier manually though.
-if(${QT_VERSION} VERSION_LESS 6.1.0)
-  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.next)
-endif()
-set_target_properties(next PROPERTIES
-    ${BUNDLE_ID_OPTION}
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-    MACOSX_BUNDLE TRUE
-    WIN32_EXECUTABLE TRUE
-)
-
-include(GNUInstallDirs)
-install(TARGETS next
-    BUNDLE DESTINATION .
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
-
-if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(next)
-endif()
+# Define the build target for the executable
+add_executable(${PROJECT_NAME} WIN32 MACOSX_BUNDLE ${SRC_FILES})
+# Link required libraries to the executable
+target_link_libraries(${PROJECT_NAME} ${wxWidgets_LIBRARIES})
