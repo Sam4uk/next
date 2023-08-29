@@ -22,7 +22,9 @@ jobs:
           sudo apt-get update
 
           sudo apt-get install -y
-          libwxgt*
+          libwxgt*-headers
+          libwxgtk*
+          libwxgtk*-dev
           cmake
           qtbase5-dev 
           qtchooser 
@@ -277,6 +279,7 @@ jobs:
             mingw-w64-${{matrix.env}}-libusb-compat-git
             mingw-w64-${{matrix.env}}-hidapi
             mingw-w64-${{matrix.env}}-libftdi
+            libwxgt*
           # base-devel
           # qtbase5-dev 
           # qtchooser 
